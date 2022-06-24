@@ -31,9 +31,10 @@
         $('.bs-callout-warning').toggleClass('hidden', ok);
       }).on('form:submit', function (e) {
 
-        return false; // Don't submit form for this demo
+      // Don't submit form for this demo
       });
     };
+
 
     //https://github.com/suyati/line-control editor
     //adding linecontroll editor to vendor register page
@@ -54,6 +55,49 @@
         return false; // Don't submit form for this demo
       });
     };
+
+    if($(".vendor_register_form").length)
+    {
+      
+      $(".phone").bind("focusout",function(e)
+      {
+        var param = "phone="+$(".phone").val();
+        var ajax_url = $(".url").val();
+       
+        
+        $.ajax(
+          {
+            url:ajax_url,
+            type:"get",
+            data:param,
+            success:function(data)
+            {
+              msg = '<div class="alert alert-danger" role="alert">'
+              msg+=data;
+              msg+='</div>';
+              $(".phone_status").html(msg);
+
+            },
+            completed:function(data)
+            {
+              console.log(data);
+            },
+            error:function(data)
+            {
+              console.log(data);
+            }
+          }
+        );
+        
+      });
+
+      $(".vendor_register_form").submit(function(e)
+      {
+        $('.company_description').val($('.company_description').Editor('getText'));
+      });
+    }
+
+
 
 
 
